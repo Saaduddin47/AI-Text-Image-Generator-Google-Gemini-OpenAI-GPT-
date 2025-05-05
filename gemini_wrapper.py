@@ -1,0 +1,19 @@
+#this file contains gemini connection
+
+import google.generativeai as genai
+import streamlit as st
+
+api_key=st.secrets["api_key_google"]
+
+#function that generates google gemini text answer to the given prompt and number of tokens
+def generate_gemini_text(prompt,tokens):
+    genai.configure(api_key=api_key)
+    model = genai.GenerativeModel("gemini-1.5-flash")
+    response = model.generate_content(
+        prompt,
+        generation_config = genai.GenerationConfig(
+            max_output_tokens=tokens,
+            temperature=0.1,
+        )
+    )
+    st.write(response.text)
